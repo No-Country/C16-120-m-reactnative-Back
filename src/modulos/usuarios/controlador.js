@@ -1,4 +1,6 @@
 const TABLA = 'usuarios';
+const bcrypt = require('bcrypt');
+
 const auth = require('../auth');
 module.exports= function (dbInyectada){
 
@@ -22,9 +24,11 @@ module.exports= function (dbInyectada){
             nombre:body.nombre,
             usuario:body.usuario,
             email:body.email,
-            activo:body.activo
-
+            activo:body.activo,
+            pass: await bcrypt.hash(body.pass.toString(), 5)
         }
+
+        
         const respuesta = await db.agregar(TABLA, usuario);
         console.log('respuesta', respuesta)
         var insertId = 0;
@@ -33,15 +37,15 @@ module.exports= function (dbInyectada){
         } else {
           insertId = body.id;
         }
-
-        if(body.usuario || body.pass){
-            await auth.agregar({
-                id:insertId,
-                usuario: body.usuario,
-                pass:body.pass
-            })
-        }
-        return true
+            var respuesta2='';
+        // if(body.usuario || body.pass){
+        //    respuesta2= await auth.agregar({
+        //         id:insertId,
+        //         usuario: body.usuario,
+        //         pass:body.pass
+        //     })
+        // }
+        // return respuesta2;
     }
     
     function eliminar(body){

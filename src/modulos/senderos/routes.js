@@ -1,12 +1,12 @@
 const express = require('express');
 const respuesta = require('../../red/respuestas')
 const controlador =require ('./index');
-
+const seguridad = require('../usuarios/seguridad')
 const router = express.Router();
 
 router.get('/',todos);
 router.get('/:id' , uno);
-router.post('/', agregar);
+router.post('/',seguridad(),agregar);
 router.put('/', eliminar);
 
 

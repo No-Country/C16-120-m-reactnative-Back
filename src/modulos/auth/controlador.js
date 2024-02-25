@@ -1,4 +1,4 @@
-const TABLA = 'auth';
+const TABLA = 'usuarios';
 const bcrypt = require('bcrypt');
 const auth = require('../../validacion');
 
@@ -11,12 +11,15 @@ module.exports= function (dbInyectada){
         db = require('../../DB/mysql');
    }
 
-   async function login(usuario, pass){
-    const data = await db.query(TABLA, {usuario:usuario});
+   async function login(email, pass){
+    const data = await db.query(TABLA, {email:email});
+
     return bcrypt.compare(pass, data.pass)
-    .then(resultado => {
+     .then(resultado => {
+        console.log(resultado)
+    
         if (resultado === true) {
-            return auth.asignarToken({...date})
+            return auth.asignarToken({...data})
     } else {
         throw new Error ('Informacion erronea');
    }

@@ -1,5 +1,7 @@
 const express = require('express');
 
+const seguridad = require('./seguridad');
+
 const respuesta = require('../../red/respuestas')
 const controlador = require ('./index');
 
@@ -8,7 +10,7 @@ const router = express.Router();
 router.get('/', todos);
 router.get('/:id' , uno);
 router.post('/', agregar);
-router.put('/', eliminar);
+router.put('/', seguridad(),eliminar);
 
 
  async function todos (req,res, next) {
@@ -48,12 +50,12 @@ router.put('/', eliminar);
 
      async function eliminar (req, res, next){
         try {
-            const items = await controlador.eliminar(req.body);
-            console.log(req.body)
+            const items = await controlador.eliminar(req.body.id);
+            console.log(req.body.id)
             respuesta.success(req, res,'Cuenta eliminada', 200);
             return items
             } catch(err){
-                next(err)
+                next(req.body)
             }
             
     }
