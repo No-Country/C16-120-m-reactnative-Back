@@ -5,10 +5,12 @@ const controlador = require ('./index');
 
 const router = express.Router();
 
-router.get('/login', login);
+router.post('/login', login);
 
 async function login (req, res, next) {
-    try {
+    
+    console.log(req.body.pass)
+try {
         const token = await controlador.login(req.body.email, req.body.pass);
         respuesta.success(req, res, token, 200);
     } catch(err){

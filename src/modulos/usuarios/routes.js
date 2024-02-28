@@ -50,7 +50,8 @@ router.put('/', seguridad(),eliminar);
 
      async function eliminar (req, res, next){
         try {
-            const items = await controlador.eliminar(req.body);
+            const items = await controlador.eliminar(req.body
+                );
             console.log(req.body.id)
             respuesta.success(req, res,'Cuenta eliminada', 200);
             return items
