@@ -38,7 +38,7 @@ let conexion ;
 function todos (tabla){
     
     return new Promise((resolve, reject) => {
-        conexion.query(`SELECT * FROM ${tabla} WHERE activo= 1`, (error, result) =>{
+        conexion.query(`SELECT * FROM ${tabla} WHERE activo= 1 LIMIT 3`, (error, result) =>{
             return error ?  reject(error) : resolve(result);
             
         } )
